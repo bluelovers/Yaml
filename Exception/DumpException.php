@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Yaml\Exception;
+//namespace Symfony\Component\Yaml\Exception;
 
 /**
  * Exception class thrown when an error occurs during dumping.
@@ -18,6 +18,6 @@ namespace Symfony\Component\Yaml\Exception;
  *
  * @api
  */
-class DumpException extends \RuntimeException implements ExceptionInterface
+class Symfony_Component_Yaml_Exception_DumpException extends RuntimeException implements Symfony_Component_Yaml_Exception_ExceptionInterface
 {
 }
