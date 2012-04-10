@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Yaml;
+//namespace Symfony\Component\Yaml;
 
-use Symfony\Component\Yaml\Exception\ParseException;
+//use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Yaml offers convenience methods to load and dump YAML.
@@ -20,7 +20,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
  *
  * @api
  */
-class Yaml
+class Symfony_Component_Yaml_Yaml
 {
     static public $enablePhpParsing = false;
 
@@ -55,7 +55,7 @@ class Yaml
         $file = '';
         if (strpos($input, "\n") === false && is_file($input)) {
             if (false === is_readable($input)) {
-                throw new ParseException(sprintf('Unable to parse "%s" as the file is not readable.', $input));
+                throw new Symfony_Component_Yaml_Exception_ParseException(sprintf('Unable to parse "%s" as the file is not readable.', $input));
             }
 
             $file = $input;
@@ -76,11 +76,11 @@ class Yaml
             }
         }
 
-        $yaml = new Parser();
+        $yaml = new Symfony_Component_Yaml_Parser();
 
         try {
             return $yaml->parse($input);
-        } catch (ParseException $e) {
+        } catch (Symfony_Component_Yaml_Exception_ParseException $e) {
             if ($file) {
                 $e->setParsedFile($file);
             }
@@ -104,7 +104,7 @@ class Yaml
      */
     static public function dump($array, $inline = 2)
     {
-        $yaml = new Dumper();
+        $yaml = new Symfony_Component_Yaml_Dumper();
 
         return $yaml->dump($array, $inline);
     }
