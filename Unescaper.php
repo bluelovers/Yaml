@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Yaml;
+//namespace Symfony\Component\Yaml;
 
 /**
  * Unescaper encapsulates unescaping rules for single and double-quoted
@@ -16,7 +16,7 @@ namespace Symfony\Component\Yaml;
  *
  * @author Matthew Lewinski <matthew@lewinski.org>
  */
-class Unescaper
+class Symfony_Component_Yaml_Unescaper
 {
     // Parser and Inline assume UTF-8 encoding, so escaped Unicode characters
     // must be converted to that encoding.
@@ -140,6 +140,6 @@ class Unescaper
             return mb_convert_encoding($value, $to, $from);
         }
 
-        throw new \RuntimeException('No suitable convert encoding function (install the iconv or mbstring extension).');
+        throw new RuntimeException('No suitable convert encoding function (install the iconv or mbstring extension).');
     }
 }
