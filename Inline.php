@@ -8,17 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Yaml;
+//namespace Symfony\Component\Yaml;
 
-use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Exception\DumpException;
+//use Symfony\Component\Yaml\Exception\ParseException;
+//use Symfony\Component\Yaml\Exception\DumpException;
 
 /**
  * Inline implements a YAML parser/dumper for the YAML inline syntax.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Inline
+class Symfony_Component_Yaml_Inline
 {
     const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\']*(?:\'\'[^\']*)*)\')';
 
@@ -73,7 +73,7 @@ class Inline
     {
         switch (true) {
             case is_resource($value):
-                throw new DumpException(sprintf('Unable to dump PHP resources in a YAML file ("%s").', get_resource_type($value)));
+                throw new Symfony_Component_Yaml_Exception_DumpException(sprintf('Unable to dump PHP resources in a YAML file ("%s").', get_resource_type($value)));
             case is_object($value):
                 return '!!php/object:'.serialize($value);
             case is_array($value):
@@ -98,10 +98,10 @@ class Inline
                 }
 
                 return $repr;
-            case Escaper::requiresDoubleQuoting($value):
-                return Escaper::escapeWithDoubleQuotes($value);
-            case Escaper::requiresSingleQuoting($value):
-                return Escaper::escapeWithSingleQuotes($value);
+            case Symfony_Component_Yaml_Escaper::requiresDoubleQuoting($value):
+                return Symfony_Component_Yaml_Escaper::escapeWithDoubleQuotes($value);
+            case Symfony_Component_Yaml_Escaper::requiresSingleQuoting($value):
+                return Symfony_Component_Yaml_Escaper::escapeWithSingleQuotes($value);
             case '' == $value:
                 return "''";
             case preg_match(self::getTimestampRegex(), $value):
@@ -175,7 +175,7 @@ class Inline
                 $output = $match[1];
                 $i += strlen($output);
             } else {
-                throw new ParseException(sprintf('Malformed inline YAML string (%s).', $scalar));
+                throw new Symfony_Component_Yaml_Exception_ParseException(sprintf('Malformed inline YAML string (%s).', $scalar));
             }
 
             $output = $evaluate ? self::evaluateScalar($output) : $output;
@@ -197,12 +197,12 @@ class Inline
     static private function parseQuotedScalar($scalar, &$i)
     {
         if (!preg_match('/'.self::REGEX_QUOTED_STRING.'/Au', substr($scalar, $i), $match)) {
-            throw new ParseException(sprintf('Malformed inline YAML string (%s).', substr($scalar, $i)));
+            throw new Symfony_Component_Yaml_Exception_ParseException(sprintf('Malformed inline YAML string (%s).', substr($scalar, $i)));
         }
 
         $output = substr($match[0], 1, strlen($match[0]) - 2);
 
-        $unescaper = new Unescaper();
+        $unescaper = new Symfony_Component_Yaml_Unescaper();
         if ('"' == $scalar[$i]) {
             $output = $unescaper->unescapeDoubleQuotedString($output);
         } else {
@@ -254,7 +254,7 @@ class Inline
                         // embedded mapping?
                         try {
                             $value = self::parseMapping('{'.$value.'}');
-                        } catch (\InvalidArgumentException $e) {
+                        } catch (InvalidArgumentException $e) {
                             // no, it's not
                         }
                     }
@@ -267,7 +267,7 @@ class Inline
             ++$i;
         }
 
-        throw new ParseException(sprintf('Malformed inline YAML string %s', $sequence));
+        throw new Symfony_Component_Yaml_Exception_ParseException(sprintf('Malformed inline YAML string %s', $sequence));
     }
 
     /**
@@ -331,7 +331,7 @@ class Inline
             }
         }
 
-        throw new ParseException(sprintf('Malformed inline YAML string %s', $mapping));
+        throw new Symfony_Component_Yaml_Exception_ParseException(sprintf('Malformed inline YAML string %s', $mapping));
     }
 
     /**
