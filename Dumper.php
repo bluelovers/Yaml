@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Yaml;
+//namespace Symfony\Component\Yaml;
 
 /**
  * Dumper dumps PHP variables to YAML strings.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Dumper
+class Symfony_Component_Yaml_Dumper
 {
     /**
      * Dumps a PHP value to YAML.
@@ -33,7 +33,7 @@ class Dumper
         $prefix = $indent ? str_repeat(' ', $indent) : '';
 
         if ($inline <= 0 || !is_array($input) || empty($input)) {
-            $output .= $prefix.Inline::dump($input);
+            $output .= $prefix.Symfony_Component_Yaml_Inline::dump($input);
         } else {
             $isAHash = array_keys($input) !== range(0, count($input) - 1);
 
@@ -42,7 +42,7 @@ class Dumper
 
                 $output .= sprintf('%s%s%s%s',
                     $prefix,
-                    $isAHash ? Inline::dump($key).':' : '-',
+                    $isAHash ? Symfony_Component_Yaml_Inline::dump($key).':' : '-',
                     $willBeInlined ? ' ' : "\n",
                     $this->dump($value, $inline - 1, $willBeInlined ? 0 : $indent + 4)
                 ).($willBeInlined ? "\n" : '');
