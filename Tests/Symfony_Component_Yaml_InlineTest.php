@@ -83,6 +83,31 @@ class Symfony_Component_Yaml_InlineTest extends PHPUnit_Framework_TestCase
 		$this->assertSame($value, Symfony_Component_Yaml_Inline::parse(Symfony_Component_Yaml_Inline::dump($value)));
 	}
 
+	/**
+	*
+	* @expectedException \Symfony\Component\Yaml\Exception\ParseException
+	*/
+    public function testParseScalarWithIncorrectlyQuotedStringShouldThrowException()
+    {
+        $value = "'don't do somthin' like that'";
+        Symfony_Component_Yaml_Inline::parseScalar($value);
+    }
+
+    public function testParseScalarWithIncorrectlyDoubleQuotedStringShouldThrowException()
+    {
+        $value = '"don"t do somthin" like that"';
+        $this->setExpectedException('Symfony\Component\Yaml\Exception\ParseException');
+        Symfony_Component_Yaml_Inline::parseScalar($value);
+    }
+
+    public function testParseScalarWithCorrectlyQuotedStringShouldReturnString()
+    {
+        $value = "'don''t do somthin'' like that'";
+        $expect = "don't do somthin' like that";
+
+        $this->assertSame($expect, Symfony_Component_Yaml_Inline::parseScalar($value));
+    }
+
 	protected function getTestsForParse()
 	{
 		return array(
